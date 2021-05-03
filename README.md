@@ -1,0 +1,2 @@
+# Politica Economica
+ Rstudio
