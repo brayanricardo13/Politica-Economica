@@ -23,13 +23,28 @@ ggplot(data = Taylor) + geom_point(mapping = aes(x= DIF, y= varpib ))
 
 ##Declaramos las variables como series de tiempo
 
-gdp <- ts(Taylor$varpib, start = c(2003,3), frequency= 4)
-inflation <- ts(Taylor$DIF, start = c(2003,3), frequency = 4)
+gdp <- ts(Taylor$varpib, start = c(1974), frequency= 2)
+inflation <- ts(Taylor$DIF, start = c(1974), frequency = 2)
+
+## descomposion de series de tiempo 
+desc = decompose(inflation )
+plot(desc, xlab='Año')
+
+desc = decompose(gdp)
+plot(desc, xlab='Año')
+
+## Eliminar la tendencia 
+## primeras diferencia 
+x = log(inflation )
+dif1.x = diff(x)
+plot(dif1.x)
+
 
 #Graficar las series de tiempo
 autoplot(cbind(gdp,inflation))
 autoplot(cbind(inflation))
 autoplot(cbind(gdp))
+
 
 #Observemos la correlaci?n entre las variables usando una regresi?n
 
@@ -47,7 +62,9 @@ acf(gdp, main ="ACF crecimiento del PIB Real" )  #AUTOCORRELOGRAMA=acf
 pacf(gdp, main ="PACF crecimiento del PIB Real" ) #AUTOCORRELOGRAMA PARCIAL=pacf
 
 acf(inflation, main = "ACF tasa de desempleo ")
+acf(x, main = "ACF tasa de desempleo ")
 pacf(inflation, main = "PACF tasa de desempleo")
+pacf(x, main = "PACF tasa de desempleo")
 
 #Encontrando la cantidad de rezagos ?ptimas
 
